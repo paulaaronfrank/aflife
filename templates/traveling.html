@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Traveling - Aaron Frank{% endblock %}
+
+{% block content %}
+<!-- Gradient Background -->
+<div class="gradient-background">
+    <div class="gradient-sphere sphere-1"></div>
+    <div class="gradient-sphere sphere-2"></div>
+    <div class="gradient-sphere sphere-3"></div>
+    <div class="grid-overlay"></div>
+    <div class="noise-overlay"></div>
+    <div class="particles-container" id="particles-container"></div>
+</div>
+
+<!-- Mouse Follower -->
+<div class="mouse-follower"></div>
+
+<!-- Single Page Hero Section -->
+<section class="single-page-hero">
+    <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center">
+            <!-- Left Side - Text Content -->
+            <div class="col-lg-6">
+                <div class="hero-content px-4 px-lg-5">
+                    <!-- Main Title -->
+                    <div class="mb-4">
+                        <h1 class="display-1 fw-bold mb-3 hero-title">Travel Adventures</h1>
+                    </div>
+
+                    <!-- Rotating Text -->
+                    <div class="mb-4">
+                        <p class="h4 mb-3 hero-label">I am a</p>
+                        <div class="rotating-text-container">
+                            <span id="rotating-text" class="h1 fw-bold hero-rotating-text">Explorer</span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="lead text-muted mb-5">
+                        From mountain peaks to coastal shores, I've journeyed across continents, 
+                        capturing the beauty of our world and sharing stories of adventure and discovery.
+                    </p>
+
+                    <!-- Back to Home -->
+                    <div class="mb-5">
+                        <a href="/" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-home me-2"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Dynamic Image -->
+            <div class="col-lg-6">
+                <div class="hero-image-container d-flex justify-content-center align-items-center">
+                    <div class="image-wrapper position-relative">
+                        <img id="hero-image" 
+                             src="{{ url_for('static', filename='images/hero/traveling.jpg') }}" 
+                             alt="Aaron Frank Traveling" 
+                             class="img-fluid rounded-3 shadow-lg hero-image">
+                        
+                        <!-- Decorative Elements -->
+                        <div class="decoration decoration-1"></div>
+                        <div class="decoration decoration-2"></div>
+                        <div class="decoration decoration-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Travel Gallery Section -->
+<section class="py-5" style="position: relative; z-index: 10;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm bg-dark border-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-14b1e611dbb8?w=400&h=300&fit=crop" class="card-img-top" alt="Mountain Adventure">
+                    <div class="card-body text-white">
+                        <h5 class="card-title">Mountain Expeditions</h5>
+                        <p class="card-text">Exploring the world's highest peaks and most challenging terrains.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm bg-dark border-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-14b1e611dbb8?w=400&h=300&fit=crop" class="card-img-top" alt="Beach Adventure">
+                    <div class="card-body text-white">
+                        <h5 class="card-title">Coastal Adventures</h5>
+                        <p class="card-text">Discovering hidden beaches and coastal communities around the world.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm bg-dark border-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-14b1e611dbb8?w=400&h=300&fit=crop" class="card-img-top" alt="City Exploration">
+                    <div class="card-body text-white">
+                        <h5 class="card-title">Urban Exploration</h5>
+                        <p class="card-text">Immersing myself in different cultures and city life across continents.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm bg-dark border-0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-14b1e611dbb8?w=400&h=300&fit=crop" class="card-img-top" alt="Desert Journey">
+                    <div class="card-body text-white">
+                        <h5 class="card-title">Desert Journeys</h5>
+                        <p class="card-text">Crossing vast deserts and experiencing the beauty of remote landscapes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Rotating text functionality
+const rotatingTexts = [
+    'Explorer', 'Adventurer', 'Wanderer', 'Nomad', 'Traveler', 
+    'Mountaineer', 'Backpacker', 'Globetrotter', 'Pilgrim', 'Voyager'
+];
+
+let currentIndex = 0;
+const rotatingTextElement = document.getElementById('rotating-text');
+
+function rotateText() {
+    rotatingTextElement.style.opacity = '0';
+    rotatingTextElement.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % rotatingTexts.length;
+        rotatingTextElement.textContent = rotatingTexts[currentIndex];
+        rotatingTextElement.style.opacity = '1';
+        rotatingTextElement.style.transform = 'translateY(0)';
+    }, 300);
+}
+
+// Start rotating text
+setInterval(rotateText, 3000);
+</script>
+{% endblock %}
