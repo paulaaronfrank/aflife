@@ -18,6 +18,15 @@ body {
     line-height: 1.6;
 }
 
+/* Ensure hover animations don't affect hitbox */
+.btn,
+.nav-link,
+.social-link,
+.back-arrow {
+    position: relative;
+    will-change: transform;
+}
+
 /* Navigation Styles */
 .navbar-brand {
     font-size: 1.8rem;
@@ -33,6 +42,7 @@ body {
 .nav-link:hover {
     color: var(--primary-color) !important;
     transform: translateY(-2px);
+    will-change: transform;
 }
 
 .nav-link::after {
@@ -482,6 +492,7 @@ body {
     color: white !important;
     transform: translateY(-2px);
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    will-change: transform;
 }
 
 /* Responsive Design */
@@ -586,6 +597,11 @@ body {
         font-size: 0.8rem;
         padding: 0.5rem 1rem;
         min-width: 90px;
+    }
+
+    /* Hide mouse follower on mobile */
+    .mouse-follower {
+        display: none;
     }
 }
 
