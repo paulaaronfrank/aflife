@@ -16,54 +16,63 @@
 <!-- Mouse Follower -->
 <div class="mouse-follower"></div>
 
-<!-- Single Page Hero Section -->
-<section class="single-page-hero">
+<!-- Back Arrow -->
+<div class="back-arrow-container">
+    <a href="/" class="back-arrow" title="Back to Home">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+</div>
+
+<!-- Sports Hero Section -->
+<section class="sports-hero">
     <div class="container-fluid h-100">
-        <div class="row h-100 align-items-center">
-            <!-- Left Side - Text Content -->
-            <div class="col-lg-6">
-                <div class="hero-content px-4 px-lg-5">
-                    <!-- Main Title -->
-                    <div class="mb-4">
-                        <h1 class="display-1 fw-bold mb-3 hero-title">Athletic Journey</h1>
-                    </div>
-
-                    <!-- Rotating Text -->
-                    <div class="mb-4">
-                        <p class="h4 mb-3 hero-label">I am a</p>
-                        <div class="rotating-text-container">
-                            <span id="rotating-text" class="h1 fw-bold hero-rotating-text">Athlete</span>
+        <div class="row h-100 align-items-center justify-content-center">
+            <!-- Full Width Sports Carousel -->
+            <div class="col-12">
+                <div class="sports-carousel-container">
+                    <h2 class="sports-title">ATHLETIC JOURNEY</h2>
+                    
+                    <div class="carousel-container">
+                        <button class="nav-arrow left">‹</button>
+                        <div class="carousel-track">
+                            <div class="card" data-index="0">
+                                <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop" alt="Running">
+                            </div>
+                            <div class="card" data-index="1">
+                                <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop" alt="Disc Golf">
+                            </div>
+                            <div class="card" data-index="2">
+                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="Bowling">
+                            </div>
+                            <div class="card" data-index="3">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" alt="Gym">
+                            </div>
+                            <div class="card" data-index="4">
+                                <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop" alt="Darts">
+                            </div>
+                            <div class="card" data-index="5">
+                                <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=400&h=300&fit=crop" alt="Golf">
+                            </div>
+                            <div class="card" data-index="6">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=300&fit=crop" alt="Basketball">
+                            </div>
                         </div>
+                        <button class="nav-arrow right">›</button>
                     </div>
 
-                    <!-- Description -->
-                    <p class="lead text-muted mb-5">
-                        Pushing physical boundaries through running, cycling, climbing, and water sports. 
-                        Every challenge is an opportunity to grow stronger and discover new limits.
-                    </p>
-
-                    <!-- Back to Home -->
-                    <div class="mb-5">
-                        <a href="/" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-home me-2"></i>Back to Home
-                        </a>
+                    <div class="sport-info">
+                        <h2 class="sport-name">Running</h2>
+                        <p class="sport-role">Endurance & Speed</p>
                     </div>
-                </div>
-            </div>
 
-            <!-- Right Side - Dynamic Image -->
-            <div class="col-lg-6">
-                <div class="hero-image-container d-flex justify-content-center align-items-center">
-                    <div class="image-wrapper position-relative">
-                        <img id="hero-image" 
-                             src="{{ url_for('static', filename='images/hero/sports.jpg') }}" 
-                             alt="Aaron Frank Sports" 
-                             class="img-fluid rounded-3 shadow-lg hero-image">
-                        
-                        <!-- Decorative Elements -->
-                        <div class="decoration decoration-1"></div>
-                        <div class="decoration decoration-2"></div>
-                        <div class="decoration decoration-3"></div>
+                    <div class="dots">
+                        <div class="dot active" data-index="0"></div>
+                        <div class="dot" data-index="1"></div>
+                        <div class="dot" data-index="2"></div>
+                        <div class="dot" data-index="3"></div>
+                        <div class="dot" data-index="4"></div>
+                        <div class="dot" data-index="5"></div>
+                        <div class="dot" data-index="6"></div>
                     </div>
                 </div>
             </div>
@@ -71,78 +80,715 @@
     </div>
 </section>
 
-<!-- Sports Gallery Section -->
-<section class="py-5" style="position: relative; z-index: 10;">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm bg-dark border-0">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" class="card-img-top" alt="Running">
-                    <div class="card-body text-white">
-                        <h5 class="card-title">Running & Endurance</h5>
-                        <p class="card-text">Marathon training and long-distance running adventures around the world.</p>
-                    </div>
-                </div>
+<!-- Sports Modal -->
+<div class="modal fade" id="sportModal" tabindex="-1" aria-labelledby="sportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sportModalLabel">
+                    <i class="fas fa-dumbbell me-2"></i>Sport Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm bg-dark border-0">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" class="card-img-top" alt="Cycling">
-                    <div class="card-body text-white">
-                        <h5 class="card-title">Cycling Adventures</h5>
-                        <p class="card-text">Exploring cities and countryside on two wheels, from urban cycling to mountain biking.</p>
-                    </div>
-                </div>
+            <div class="modal-body" id="sportModalBody">
+                <!-- Dynamic content will be inserted here -->
             </div>
-            
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm bg-dark border-0">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" class="card-img-top" alt="Water Sports">
-                    <div class="card-body text-white">
-                        <h5 class="card-title">Water Sports</h5>
-                        <p class="card-text">Surfing, swimming, and water-based activities in oceans and lakes worldwide.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm bg-dark border-0">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" class="card-img-top" alt="Climbing">
-                    <div class="card-body text-white">
-                        <h5 class="card-title">Rock Climbing</h5>
-                        <p class="card-text">Scaling cliffs and mountains, both indoor and outdoor climbing experiences.</p>
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Rotating text functionality
-const rotatingTexts = [
-    'Athlete', 'Runner', 'Cyclist', 'Climber', 'Swimmer', 
-    'Endurance Athlete', 'Competitor', 'Champion', 'Warrior', 'Adventurer'
+// Sports data
+const sportsData = [
+    { 
+        name: "Running", 
+        role: "Endurance & Speed",
+        description: "Marathon training and long-distance running adventures. From 5K sprints to full marathons, pushing the limits of endurance and speed.",
+        achievements: ["Personal Best: 3:45 Marathon", "Completed 10+ Half Marathons", "Trail Running Enthusiast"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Running Journey</h3>
+                <p>Running has been my foundation for fitness and mental clarity. From early morning jogs to marathon training, each step teaches me about perseverance and pushing through limits.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Personal Best Marathon: 3:45:00</li>
+                        <li>Completed 10+ Half Marathons</li>
+                        <li>Trail Running in 5+ Countries</li>
+                        <li>Consistent 5K Training</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Training Philosophy:</h4>
+                    <p>Focus on consistency over intensity. Building endurance through gradual progression and listening to your body.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Disc Golf", 
+        role: "Precision & Strategy",
+        description: "Mastering the art of disc flight and course strategy. From local courses to championship tournaments.",
+        achievements: ["Course Record Holder", "Tournament Competitor", "Ace Achiever"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Disc Golf Mastery</h3>
+                <p>Disc golf combines precision, strategy, and outdoor adventure. Each throw is a calculated decision, balancing power, accuracy, and course conditions.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Course Record at Local Park</li>
+                        <li>Multiple Tournament Competitions</li>
+                        <li>5+ Aces (Hole-in-One)</li>
+                        <li>PDGA Member</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Strategy Focus:</h4>
+                    <p>Course management and disc selection are crucial. Understanding wind conditions and disc flight patterns.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Bowling", 
+        role: "Technique & Consistency",
+        description: "Perfecting the approach, release, and follow-through. From casual leagues to competitive tournaments.",
+        achievements: ["200+ Average", "Perfect Game", "League Champion"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Bowling Excellence</h3>
+                <p>Bowling is all about technique, consistency, and mental focus. Every frame requires precision and the ability to adapt to changing lane conditions.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Perfect Game (300)</li>
+                        <li>200+ Average in League Play</li>
+                        <li>Multiple Tournament Wins</li>
+                        <li>USBC Certified</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Technique Focus:</h4>
+                    <p>Consistent approach, proper release, and reading lane conditions. Mental game is equally important as physical technique.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Gym Training", 
+        role: "Strength & Conditioning",
+        description: "Building functional strength and maintaining peak physical condition through structured workouts.",
+        achievements: ["Personal Records", "Consistent Training", "Injury Prevention"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Gym Training Philosophy</h3>
+                <p>Gym training provides the foundation for all other sports. Focus on functional movements, progressive overload, and balanced development.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Deadlift: 2x Bodyweight</li>
+                        <li>Bench Press: 1.5x Bodyweight</li>
+                        <li>5+ Years Consistent Training</li>
+                        <li>Zero Major Injuries</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Training Principles:</h4>
+                    <p>Progressive overload, proper form, and recovery. Balance between strength, mobility, and cardiovascular fitness.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Darts", 
+        role: "Focus & Precision",
+        description: "Mastering the art of precision throwing and mental concentration. From pub games to competitive leagues.",
+        achievements: ["180 Scorer", "League Player", "Tournament Competitor"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Darts Precision</h3>
+                <p>Darts is a game of precision, focus, and mental toughness. Every throw requires complete concentration and steady nerves.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Multiple 180 Scores</li>
+                        <li>League Regular Player</li>
+                        <li>Tournament Competitions</li>
+                        <li>Consistent 60+ Averages</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Focus Techniques:</h4>
+                    <p>Consistent stance, smooth throw, and mental preparation. Practice routine and breathing techniques are key.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Golf", 
+        role: "Patience & Strategy",
+        description: "Perfecting the swing, course management, and mental game. From driving range to championship courses.",
+        achievements: ["Single Digit Handicap", "Course Records", "Tournament Player"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Golf Mastery</h3>
+                <p>Golf is a mental game as much as physical. Course management, patience, and consistent technique are the keys to success.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>Single Digit Handicap</li>
+                        <li>Course Record Holder</li>
+                        <li>Multiple Tournament Wins</li>
+                        <li>Played 50+ Courses</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Course Strategy:</h4>
+                    <p>Course management over power. Understanding wind, lie, and green conditions. Mental game and course strategy are crucial.</p>
+                </div>
+            </div>
+        `
+    },
+    { 
+        name: "Basketball", 
+        role: "Teamwork & Agility",
+        description: "Fast-paced team sport combining athleticism, strategy, and teamwork. From pickup games to league play.",
+        achievements: ["League Champion", "All-Star Player", "Team Captain"],
+        modalContent: `
+            <div class="sport-modal-content">
+                <h3>Basketball Excellence</h3>
+                <p>Basketball combines athleticism, teamwork, and strategy. Fast-paced action requires quick thinking and physical conditioning.</p>
+                <div class="achievements">
+                    <h4>Key Achievements:</h4>
+                    <ul>
+                        <li>League Championship Winner</li>
+                        <li>All-Star Team Selection</li>
+                        <li>Team Captain for 3 Seasons</li>
+                        <li>Consistent Double-Double Player</li>
+                    </ul>
+                </div>
+                <div class="training-tips">
+                    <h4>Team Dynamics:</h4>
+                    <p>Communication, court vision, and unselfish play. Physical conditioning and basketball IQ are equally important.</p>
+                </div>
+            </div>
+        `
+    }
 ];
 
+// Carousel functionality
+const cards = document.querySelectorAll(".card");
+const dots = document.querySelectorAll(".dot");
+const sportName = document.querySelector(".sport-name");
+const sportRole = document.querySelector(".sport-role");
+const leftArrow = document.querySelector(".nav-arrow.left");
+const rightArrow = document.querySelector(".nav-arrow.right");
 let currentIndex = 0;
-const rotatingTextElement = document.getElementById('rotating-text');
+let isAnimating = false;
 
-function rotateText() {
-    rotatingTextElement.style.opacity = '0';
-    rotatingTextElement.style.transform = 'translateY(20px)';
-    
+function updateCarousel(newIndex) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    currentIndex = (newIndex + cards.length) % cards.length;
+
+    cards.forEach((card, i) => {
+        const offset = (i - currentIndex + cards.length) % cards.length;
+
+        card.classList.remove(
+            "center",
+            "left-1",
+            "left-2",
+            "right-1",
+            "right-2",
+            "hidden"
+        );
+
+        if (offset === 0) {
+            card.classList.add("center");
+        } else if (offset === 1) {
+            card.classList.add("right-1");
+        } else if (offset === 2) {
+            card.classList.add("right-2");
+        } else if (offset === cards.length - 1) {
+            card.classList.add("left-1");
+        } else if (offset === cards.length - 2) {
+            card.classList.add("left-2");
+        } else {
+            card.classList.add("hidden");
+        }
+    });
+
+    dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentIndex);
+    });
+
+    sportName.style.opacity = "0";
+    sportRole.style.opacity = "0";
+
     setTimeout(() => {
-        currentIndex = (currentIndex + 1) % rotatingTexts.length;
-        rotatingTextElement.textContent = rotatingTexts[currentIndex];
-        rotatingTextElement.style.opacity = '1';
-        rotatingTextElement.style.transform = 'translateY(0)';
+        sportName.textContent = sportsData[currentIndex].name;
+        sportRole.textContent = sportsData[currentIndex].role;
+        sportName.style.opacity = "1";
+        sportRole.style.opacity = "1";
     }, 300);
+
+    setTimeout(() => {
+        isAnimating = false;
+    }, 800);
 }
 
-// Start rotating text
-setInterval(rotateText, 3000);
+// Event listeners
+leftArrow.addEventListener("click", () => {
+    updateCarousel(currentIndex - 1);
+});
+
+rightArrow.addEventListener("click", () => {
+    updateCarousel(currentIndex + 1);
+});
+
+dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+        updateCarousel(i);
+    });
+});
+
+cards.forEach((card, i) => {
+    card.addEventListener("click", () => {
+        updateCarousel(i);
+        showSportModal(i);
+    });
+});
+
+// Modal functionality
+function showSportModal(index) {
+    const sport = sportsData[index];
+    const modal = document.getElementById('sportModal');
+    const modalTitle = document.getElementById('sportModalLabel');
+    const modalBody = document.getElementById('sportModalBody');
+    
+    modalTitle.textContent = sport.name;
+    modalBody.innerHTML = sport.modalContent;
+    
+    // Show modal
+    const bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+        updateCarousel(currentIndex - 1);
+    } else if (e.key === "ArrowRight") {
+        updateCarousel(currentIndex + 1);
+    }
+});
+
+// Touch/swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            updateCarousel(currentIndex + 1);
+        } else {
+            updateCarousel(currentIndex - 1);
+        }
+    }
+}
+
+// Initialize carousel
+updateCarousel(0);
 </script>
+
+<style>
+/* Sports Page Styles */
+.sports-hero {
+    min-height: 100vh;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+}
+
+/* Back Arrow */
+.back-arrow-container {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 1000;
+}
+
+.back-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.back-arrow:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    transform: translateX(-5px);
+    text-decoration: none;
+    will-change: transform;
+}
+
+
+/* Sports Carousel Container */
+.sports-carousel-container {
+    text-align: center;
+    padding: 2rem;
+}
+
+.sports-title {
+    font-size: 7.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: "Arial Black", "Arial Bold", Arial, sans-serif;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.carousel-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 450px;
+    position: relative;
+    perspective: 1000px;
+    margin: 80px auto 0 auto;
+}
+
+.carousel-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card {
+    position: absolute;
+    width: 280px;
+    height: 380px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card.center {
+    z-index: 10;
+    transform: scale(1.1) translateZ(0);
+}
+
+.card.center img {
+    filter: none;
+}
+
+.card.left-2 {
+    z-index: 1;
+    transform: translateX(-400px) scale(0.8) translateZ(-300px);
+    opacity: 0.7;
+}
+
+.card.left-2 img {
+    filter: grayscale(100%);
+}
+
+.card.left-1 {
+    z-index: 5;
+    transform: translateX(-200px) scale(0.9) translateZ(-100px);
+    opacity: 0.9;
+}
+
+.card.left-1 img {
+    filter: grayscale(100%);
+}
+
+.card.right-1 {
+    z-index: 5;
+    transform: translateX(200px) scale(0.9) translateZ(-100px);
+    opacity: 0.9;
+}
+
+.card.right-1 img {
+    filter: grayscale(100%);
+}
+
+.card.right-2 {
+    z-index: 1;
+    transform: translateX(400px) scale(0.8) translateZ(-300px);
+    opacity: 0.7;
+}
+
+.card.right-2 img {
+    filter: grayscale(100%);
+}
+
+.card.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sport-info {
+    text-align: center;
+    margin-top: 40px;
+    transition: all 0.5s ease-out;
+}
+
+.sport-name {
+    color: rgb(8, 42, 123);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.sport-name::before,
+.sport-name::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100px;
+    height: 2px;
+    background: rgb(8, 42, 123);
+}
+
+.sport-name::before {
+    left: -120px;
+}
+
+.sport-name::after {
+    right: -120px;
+}
+
+.sport-role {
+    color: #848696;
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 0;
+    margin-top: -15px;
+    position: relative;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 60px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(8, 42, 123, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: rgb(8, 42, 123);
+    transform: scale(1.2);
+}
+
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(8, 42, 123, 0.6);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    padding-bottom: 4px;
+}
+
+.nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left {
+    left: 20px;
+    padding-right: 3px;
+}
+
+.nav-arrow.right {
+    right: 20px;
+    padding-left: 3px;
+}
+
+/* Modal Styles */
+.sport-modal-content {
+    padding: 1rem;
+}
+
+.sport-modal-content h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.sport-modal-content h4 {
+    color: #34495e;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.sport-modal-content p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.sport-modal-content ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.sport-modal-content li {
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.achievements {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.training-tips {
+    background: #e8f4fd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .back-arrow-container {
+        top: 20px;
+        left: 20px;
+    }
+    
+    .back-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    
+    .sports-title {
+        font-size: 4.5rem;
+    }
+
+    .card {
+        width: 200px;
+        height: 280px;
+    }
+
+    .card.left-2 {
+        transform: translateX(-250px) scale(0.8) translateZ(-300px);
+    }
+
+    .card.left-1 {
+        transform: translateX(-120px) scale(0.9) translateZ(-100px);
+    }
+
+    .card.right-1 {
+        transform: translateX(120px) scale(0.9) translateZ(-100px);
+    }
+
+    .card.right-2 {
+        transform: translateX(250px) scale(0.8) translateZ(-300px);
+    }
+
+    .sport-name {
+        font-size: 2rem;
+    }
+
+    .sport-role {
+        font-size: 1.2rem;
+    }
+
+    .sport-name::before,
+    .sport-name::after {
+        width: 50px;
+    }
+
+    .sport-name::before {
+        left: -70px;
+    }
+
+    .sport-name::after {
+        right: -70px;
+    }
+}
+</style>
 {% endblock %}
