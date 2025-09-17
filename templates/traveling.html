@@ -38,7 +38,7 @@
                     <!-- Country Counter -->
                     <div class="mb-4">
                         <div class="country-counter">
-                            <span id="country-number" class="display-1 fw-bold text-primary">65</span>
+                            <span id="country-number" class="display-1 fw-bold text-primary">{{ visited_count }}</span>
                         </div>
                         <p class="h4 text-muted">and counting...</p>
                     </div>
@@ -49,11 +49,11 @@
             <div class="col-lg-6">
                 <div class="map-container position-relative">
                     <div class="world-map-wrapper">
-                        <svg id="world-map" viewBox="0 0 1000 500" class="world-map">
-                            <!-- World map paths will be inserted here -->
-                        </svg>
+                        <img src="{{ url_for('static', filename='images/page/world-map.jpg') }}" 
+                             alt="World Map" 
+                             class="world-map-image">
                         <div class="map-overlay">
-                            <button class="btn btn-primary btn-lg explore-map-btn" id="explore-map-btn">
+                            <button class="btn btn-primary btn-lg explore-map-btn" id="explore-map-btn" data-bs-toggle="modal" data-bs-target="#worldMapModal">
                                 <i class="fas fa-globe me-2"></i>Explore Interactive Map
                             </button>
                         </div>
@@ -189,67 +189,158 @@
 {% block scripts %}
 <script>
 // World map interaction
-const worldMap = document.getElementById('world-map');
+const worldMapImage = document.querySelector('.world-map-image');
 const mapOverlay = document.querySelector('.map-overlay');
 const exploreBtn = document.getElementById('explore-map-btn');
-
-// Simple world map SVG paths (simplified version)
-const worldMapPaths = `
-    <g class="country" data-country="North America">
-        <path d="M100,200 L300,200 L300,300 L100,300 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-    <g class="country" data-country="South America">
-        <path d="M200,350 L350,350 L350,450 L200,450 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-    <g class="country" data-country="Europe">
-        <path d="M400,150 L500,150 L500,200 L400,200 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-    <g class="country" data-country="Africa">
-        <path d="M450,250 L550,250 L550,400 L450,400 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-    <g class="country" data-country="Asia">
-        <path d="M550,100 L750,100 L750,250 L550,250 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-    <g class="country" data-country="Australia">
-        <path d="M650,400 L750,400 L750,450 L650,450 Z" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
-    </g>
-`;
-
-// Insert world map paths
-worldMap.innerHTML = worldMapPaths;
-
-// Add hover effects to countries
-const countries = document.querySelectorAll('.country');
-countries.forEach(country => {
-    country.addEventListener('mouseenter', function() {
-        this.style.fill = '#3498db';
-        this.style.transform = 'scale(1.05)';
-        this.style.transition = 'all 0.3s ease';
-    });
-    
-    country.addEventListener('mouseleave', function() {
-        this.style.fill = '#2c3e50';
-        this.style.transform = 'scale(1)';
-    });
-});
 
 // Map container hover effects
 const mapContainer = document.querySelector('.map-container');
 mapContainer.addEventListener('mouseenter', function() {
-    worldMap.style.filter = 'blur(2px)';
+    worldMapImage.style.filter = 'blur(2px)';
     mapOverlay.style.opacity = '1';
     mapOverlay.style.visibility = 'visible';
 });
 
 mapContainer.addEventListener('mouseleave', function() {
-    worldMap.style.filter = 'blur(0)';
+    worldMapImage.style.filter = 'blur(0)';
     mapOverlay.style.opacity = '0';
     mapOverlay.style.visibility = 'hidden';
 });
 
-// Explore map button click
-exploreBtn.addEventListener('click', function() {
-    alert('Interactive map feature coming soon! This will show detailed country information and travel stories.');
+// World Map Modal Functionality
+let worldMapModal;
+let worldMapIframe;
+
+// Function to generate Fla-shop.com embed URL
+function generateEmbedUrl(isoCodes) {
+    console.log('=== URL Generation Debug ===');
+    console.log('Input ISO codes:', isoCodes);
+    
+    if (!isoCodes || isoCodes.length === 0) {
+        console.log('No ISO codes provided, using empty map');
+        return 'https://www.fla-shop.com/visited-countries/embed/?st=&vc=1ca032&uc=b3c3ca&hc=40bfa6&bc=ffffff';
+    }
+    
+    // Join ISO codes with %2C (URL encoded comma)
+    const isoCodesString = isoCodes.join('%2C');
+    console.log('ISO codes string (URL encoded):', isoCodesString);
+    
+    // Construct the complete embed URL
+    const baseUrl = 'https://www.fla-shop.com/visited-countries/embed/';
+    const params = `?st=${isoCodesString}&vc=1ca032&uc=b3c3ca&hc=40bfa6&bc=ffffff`;
+    const fullUrl = baseUrl + params;
+    
+    console.log('Base URL:', baseUrl);
+    console.log('Parameters:', params);
+    console.log('Full URL:', fullUrl);
+    console.log('=== End URL Generation Debug ===');
+    
+    return fullUrl;
+}
+
+// Function to fetch visited countries and update map
+async function loadWorldMap() {
+    console.log('🌍 Starting world map load process...');
+    
+    try {
+        console.log('📡 Fetching visited countries from API...');
+        const response = await fetch('/api/countries/visited/iso-codes');
+        
+        console.log('📡 API Response status:', response.status);
+        console.log('📡 API Response headers:', response.headers);
+        
+        if (!response.ok) {
+            throw new Error(`API request failed with status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('📡 API Response data:', data);
+        
+        // Generate the embed URL
+        const embedUrl = generateEmbedUrl(data.iso_codes);
+        
+        console.log('🔗 Setting iframe source to:', embedUrl);
+        
+        // Update the iframe source
+        worldMapIframe.src = embedUrl;
+        
+        // Add load event listener to iframe
+        worldMapIframe.onload = function() {
+            console.log('✅ Iframe loaded successfully');
+        };
+        
+    } catch (error) {
+        console.error('❌ Error loading world map:', error);
+    }
+}
+
+// Function to show fallback content
+function showFallbackContent(isoCodes) {
+    console.log('🔄 Showing fallback content for ISO codes:', isoCodes);
+    
+    worldMapIframe.style.display = 'none';
+    const container = document.getElementById('world-map-container');
+    
+    const fallbackHtml = `
+        <div class="text-center p-5">
+            <h4><i class="fas fa-globe me-2"></i>Interactive World Map</h4>
+            <p class="lead">Visited Countries: ${isoCodes.length > 0 ? isoCodes.join(', ') : 'None'}</p>
+            <p class="text-muted">Map visualization temporarily unavailable</p>
+            <a href="https://www.fla-shop.com/visited-countries/" target="_blank" class="btn btn-primary">
+                <i class="fas fa-external-link-alt me-2"></i>View on Fla-shop.com
+            </a>
+        </div>
+    `;
+    
+    container.innerHTML = fallbackHtml;
+}
+
+// Initialize modal functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 Initializing world map modal...');
+    
+    // Get modal elements
+    worldMapModal = document.getElementById('worldMapModal');
+    worldMapIframe = document.getElementById('world-map-iframe');
+    
+    console.log('🔧 Modal element:', worldMapModal);
+    console.log('🔧 Iframe element:', worldMapIframe);
+    
+    if (worldMapModal && worldMapIframe) {
+        console.log('✅ Modal and iframe elements found, setting up event listeners...');
+        
+        // Load map when modal is shown
+        worldMapModal.addEventListener('show.bs.modal', function() {
+            console.log('🚀 Modal opening, loading world map...');
+            loadWorldMap();
+        });
+        
+        // Clear iframe when modal is hidden to save resources
+        worldMapModal.addEventListener('hidden.bs.modal', function() {
+            console.log('🔄 Modal closing, clearing iframe...');
+            worldMapIframe.src = '';
+            worldMapIframe.style.display = 'block';
+            
+            // Reset container content
+            const container = document.getElementById('world-map-container');
+            container.innerHTML = `
+                <div style="position:relative;padding: 0 0 67% 0;height:0;overflow:hidden;">
+                    <iframe id="world-map-iframe" 
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                            src="" 
+                            frameborder="0" 
+                            scrolling="no">
+                    </iframe>
+                </div>
+            `;
+        });
+        
+        console.log('✅ Modal event listeners set up successfully!');
+    } else {
+        console.error('❌ World map modal or iframe not found!');
+        console.error('Modal:', worldMapModal);
+        console.error('Iframe:', worldMapIframe);
+    }
 });
 
 // Scroll indicator functionality
@@ -399,10 +490,12 @@ html, body {
     border-radius: 15px;
 }
 
-.world-map {
+.world-map-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     transition: filter 0.3s ease;
+    border-radius: 15px;
 }
 
 .map-overlay {
@@ -422,8 +515,36 @@ html, body {
 }
 
 .explore-map-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50px !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transform: translateY(20px);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    will-change: transform;
+}
+
+.explore-map-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: white !important;
+    transform: translateY(0) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+.explore-map-btn:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: white !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 .map-overlay:hover .explore-map-btn {
@@ -584,6 +705,40 @@ html, body {
     .section-content h2 {
         font-size: 2.5rem;
     }
+    
+    .explore-map-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
 }
 </style>
+
+<!-- World Map Modal -->
+<div class="modal fade" id="worldMapModal" tabindex="-1" aria-labelledby="worldMapModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="worldMapModalLabel">
+                    <i class="fas fa-globe me-2"></i>Interactive World Map
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="world-map-container" style="max-width:980px;margin:5px auto 10px auto;font-size:14px;">
+                    <div style="position:relative;padding: 0 0 67% 0;height:0;overflow:hidden;">
+                        <iframe id="world-map-iframe" 
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                                src="" 
+                                frameborder="0" 
+                                scrolling="no">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
