@@ -76,32 +76,10 @@ function hideImage() {
     heroImage.style.transform = 'scale(0.9)';
 }
 
-// View Transitions API implementation
+// Simple page navigation (no transitions)
 function initViewTransitions() {
-    // Check if View Transitions API is supported
-    if (!('startViewTransition' in document)) {
-        console.log('View Transitions API not supported, using fallback');
-        return;
-    }
-    
-    // Add click handlers to navigation links
-    const navLinks = document.querySelectorAll('a[href^="/"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Only handle internal links
-            if (this.hostname === window.location.hostname || this.hostname === '') {
-                e.preventDefault();
-                
-                const href = this.getAttribute('href');
-                
-                // Use View Transitions API for smooth page transitions
-                document.startViewTransition(() => {
-                    window.location.href = href;
-                });
-            }
-        });
-    });
+    // No special handling needed - let browser handle navigation naturally
+    console.log('Using standard page navigation');
 }
 
 // Scroll effects and animations

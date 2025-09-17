@@ -230,6 +230,9 @@ body {
     transform-style: preserve-3d;
     will-change: auto;
     position: relative;
+    /* Ensure smooth transitions */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .hero-content {
@@ -456,10 +459,6 @@ body {
     }
 }
 
-/* View Transitions */
-@view-transition {
-    navigation: auto;
-}
 
 /* Slim Footer */
 .slim-footer {

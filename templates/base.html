@@ -19,56 +19,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
-    <!-- View Transitions CSS -->
-    <style>
-        @view-transition {
-            navigation: auto;
-        }
-        
-        /* View transition names for smooth image transitions */
-        .hero-image {
-            view-transition-name: hero-image;
-        }
-        
-        .hero-content {
-            view-transition-name: hero-content;
-        }
-        
-        .gradient-background {
-            view-transition-name: gradient-background;
-        }
-        
-        /* Stable transition animations - no movement */
-        ::view-transition-old(hero-image) {
-            animation: fadeOut 0.4s ease-out;
-        }
-        
-        ::view-transition-new(hero-image) {
-            animation: fadeIn 0.4s ease-in;
-        }
-        
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateX(0) translateY(0) scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(0) translateY(0) scale(1);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateX(0) translateY(0) scale(1);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0) translateY(0) scale(1);
-            }
-        }
-    </style>
     
     {% block head %}{% endblock %}
 </head>
